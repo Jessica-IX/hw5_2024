@@ -1,0 +1,167 @@
+/*Step 1: 5s animation of logo with no delay*/
+@keyframes logoAnimation {
+    from {
+      width: 25px;
+      opacity: 0;
+    }
+    to {
+      width: 475px;
+      opacity: 1;
+    }
+}
+  
+#logo {
+    display: block;
+    width: 25px;
+    opacity: 0;
+    animation-name: logoAnimation;
+    animation-duration: 5s;
+    animation-fill-mode: forwards; /*Keep the end view*/
+}
+  
+/*Step 2*/
+body {
+    font-family: 'Poppins', serif;
+    background-color: #f1f1f1; /*Back-up color*/
+    background-image: url('/images/concrete_seamless.png');
+}
+
+/*Step 3: logo and navigation on 1 column, centered*/
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+/*Step 4: all navigations on 1 column*/
+.nav_links {
+    display: flex;
+    flex-direction: column;
+}
+
+/*Step 5: unvisited & visited links have the same color*/
+a:link, a:visited {
+    color: blue;
+}
+
+/*Step 6: headers that are direction children of card*/
+.card > header {
+    background: #288088;
+    border: 2px solid  #45ADAD;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top-right-radius: 50px;
+    border-top-left-radius: 50px;
+}
+
+.card {
+    /*Step 7: card initial size*/
+    flex-basis: 450px;
+    /* for .card > header, cards are the parents, 
+    let the parntes also have the border radius, 
+    so the corners of .card > header don't have white background*/ 
+    border-top-right-radius: 50px;
+    border-top-left-radius: 50px;
+}
+
+/*Step 8*/
+.pricing {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /*centered horizontally*/
+    align-items: center; /*centered vertically*/
+}
+
+/*Step 9*/
+.gallery img {
+    border: 10px solid #50C7C7;
+    margin: 10px;
+    width: 300px;
+}
+
+/*Step 10: With more width, more items are allowed to get to 1 row*/
+.gallery {
+    display: flex;
+    flex-wrap: wrap; /*Otherwise all items squeezed togeter*/
+    justify-content: center;
+}
+
+@media screen and (min-width: 900px) {
+    /*Step 11: logo & navigation get to the same row
+    logo left-most, navigations right-most*/
+    header {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .nav_links {
+        flex-direction: row; /*All navs on 1 row*/
+    }
+    
+    /*Step 12*/
+    .card {
+        flex-basis: 275px;
+    }
+
+    /*Step 13: the 1st header is the one that's not in main,
+    make it sticky when its top position = 0*/
+    header:not(main header) {
+        position: sticky;
+        top: 0;
+    }
+}
+
+/*Step 14*/
+@media (prefers-reduced-motion) {
+    #logo  {
+         /*Shows what's 5s after the animation, 
+         since the animation duration is 5s, 
+         it means not displaying the process of animation,
+         but what's shown after the animation*/
+        animation-delay: -5s;
+    }
+}
+
+@media print {
+    body {
+        /*Step 15*/
+        font-family: Arial, Helvetica;
+         /* Step 16: set background-image to initial to remove the img*/
+        background-image: initial;
+    }
+
+    /*Step 17*/
+    nav {
+         /*nav is the flex-item of header, makes it take up the whole row, 
+         so there is enough space for class nav_links's items to space-around*/
+        width: 100%;
+    }
+
+    /*Step 17*/
+    .nav_links {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    /*Step 18*/
+    .pricing {
+        /*nowrap forces elements to shrink rather than go to the next row*/
+        flex-wrap: nowrap;
+        align-items: end;
+    }
+
+    /*Step 19*/
+    .card {
+        border: 2px solid #45ADDD;
+        flex: 325px;
+    }
+
+    /*Step 20: Hide both gallery title & content*/
+    #gallery, .gallery {
+        display: none;
+    }
+
+    /*Step 21: Add the emoji after the 2nd children of ul
+    (excluding the ul that is not in main)*/
+    main ul li:nth-child(2)::after {
+        content: "\1F44D"; /* Unicode character for thumbs up emoji */
+    }
+}
